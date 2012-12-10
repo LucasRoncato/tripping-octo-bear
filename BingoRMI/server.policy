@@ -1,4 +1,4 @@
-grant codeBase "file:/C:/Users/631020399/Documents/workspace/BingoRMI/bin" {
+grant codeBase "file:/C:/Users/Lucas/Desktop/oldDesktop/eclipse/tcc/tripping-octo-bear/BingoRMI/bin" {
 	permission java.security.AllPermission;
 	permission java.net.SocketPermission "*:1099-", "connect,accept";
 };
