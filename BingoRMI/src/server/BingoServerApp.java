@@ -20,7 +20,7 @@ public class BingoServerApp implements BingoServer, Runnable {
 	Sorteio sorteio = new Sorteio();
 	final static String boasVindas = "Welcome to BingoLaw.\n "
 			+ "The match will start as soon as the third player connects.\n "
-			+ "Notice that the drawn numbers will be shown in the central position below N.";
+			+ "Notice that the drawn numbers will be shown in the central position below N.\n";
 
 	public BingoServerApp() {
 		super();
@@ -45,12 +45,9 @@ public class BingoServerApp implements BingoServer, Runnable {
 		if(Verifica.verificaBingo(sorteio, clients.get(bc))){
 			for (Map.Entry<BingoClient, Ticket> entry : clients.entrySet()) {
 				try {
-					if(entry.getKey() != bc){
+					
 						entry.getKey().recebeMensagem(bc + " won!");
-					}else{
-						entry.getKey().recebeMensagem("Congratulations, you won!");
-					}
-				} catch (RemoteException e) {
+					} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -67,11 +64,8 @@ public class BingoServerApp implements BingoServer, Runnable {
 		if(Verifica.verificaColuna(coluna, sorteio, clients.get(bc))){
 			for (Map.Entry<BingoClient, Ticket> entry : clients.entrySet()) {
 				try {
-					if(entry.getKey() != bc){
 						entry.getKey().recebeMensagem(bc + " completed a column!");
-					}else{
-						entry.getKey().recebeMensagem("Congratulations, completed a column!");
-					}
+					
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,7 +79,8 @@ public class BingoServerApp implements BingoServer, Runnable {
 
 	public void run() {
 
-		while (!Thread.interrupted()) {
+		while (!Thread.currentThread().isInterrupted()) {
+			//TODO aparentemetne isso n funfa^
 			int sorteado;
 			if ((sorteado = sorteio.sorteia()) != -1) {
 				// for (BingoClient c : clients) {
@@ -105,7 +100,7 @@ public class BingoServerApp implements BingoServer, Runnable {
 					}
 				}
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -120,14 +115,9 @@ public class BingoServerApp implements BingoServer, Runnable {
 					}
 				}
 				Thread.currentThread().interrupt();
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		}
+		
 	}
 
 	public static void main(String[] args) {
